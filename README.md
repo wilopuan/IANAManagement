@@ -1,13 +1,16 @@
 # IANAManagement
-Servicios sobre informacion IANA
+Servicios API sobre informacion IANA
 
 Presentación
+
 Este es el proyecto que soluciona los requerimientos formulados para la administración de rangos IANA (Internet Assigned Numbers Authority). Los requerimientos que cubre son los siguientes: (1) Carga de rangos IANA a una base de datos, (2) Consulta de dirección IP sobre la tabla cargada. Estas funcionalidades se ejecutan desde las API de servicios RESTfull expuestos.
 
 Estrategia de diseño
+
 Se pretende construir la base para un sistema de administración de una lista de rangos IANA persistidos dentro de una base de datos relacional. Esta administración se diseña para que pueda ser automatizada, es decir ejecutada desde eventos de otras aplicaciones. El sistema está diseñado para que pueda operar en alta disponibilidad.
 
 Herramientas de desarrollo
+
 Desarrollo en J2EE usando la versión jdk1.8.0_171.
 El ambiente de desarrollo usado IDE Eclipse Versión: Neon.3 Release (4.6.3).
 Se usa MAVEN como manejador de dependencias y arquetipo.
@@ -15,11 +18,13 @@ Se usa como Framework Spring boot.
 Se usó como motor de base de datos para pruebas de desarrollo MySQL Workbench 8. 
 Se usa como manejador de versiones GIT
 
-Insumos.
+Insumos
+
 Archivo Plano tipo CSV para pruebas de carga.
 Documento con requerimientos funcionales y no funcionales.
 
 Criterios asumidos
+
 Se asumen los siguientes criterios que no contemplo el documento:
 1)	Reemplazo de campo Time Zone: En el documento se hace referencia a este campo, pero en el archivo de texto insumo no hay ninguno con esta característica. Para efecto se reemplaza este campo con el campo Company tomando el último campo de la distribución.
 2)	Procesamiento del Archivo Plano: Se entiende desde el requerimiento que hay un lanzamiento del procesamiento del archivo; como se expresa, son archivos de gran volumen, se asume que el servicio expuesto solamente activa el lanzamiento. Con ello el procesamiento del archivo se limitaría a leerlo desde una localización, -parsearlo- desde una funcionalidad del aplicativo, y persistirlo en una tabla de base de datos.
@@ -43,10 +48,12 @@ Ajustar el functional.properties con la ruta de ubicación del archivo de prueba
 3)	Configurar Requerimientos para la construcción del proyecto (Build Maven Goals):
 Aplica solo para ambientes de desarrollo. Si se ejecuta sobre IDE Eclipse, tener en cuenta hacerlo con el JDK en librerías y no con el Jre.
 
-Creación de la tabla de base de datos:
+Creación de la tabla de base de datos
+
 Se debe ejecutar dentro de la base de datos el script MakeTable.sql que está ubicado en la raíz del proyecto. Puede requerirse ajustar el prefijo de la base de datos. No cambiar el nombre de la tabla, campos ni tipología.
 
 Ejecución y prueba del aplicativo
+
 Antes de ejecutarse se deben haber completado los pasos de la configuración.
 Una vez desplegado el aplicativo, esto es desde IDE o desde el despliegue de su .war, el aplicativo queda listo y sirviendo a sus API de tipo GET.
 Las pruebas de la API pueden hacerse desde un navegador normal (Con activación de herramientas de desarrollo), desde un SOAP-UI (Endpoint Explorer) o similar. A continuación se detallan los manuales de la API expuestas.
@@ -87,13 +94,21 @@ Los tiempos invertidos inicialmente mientras se instala el ecosistema pueden ser
 Es importante destacar que, si bien este ejercicio no representa todas las funcionalidades que debe tener un escenario de administración real de un control IANA, es la base para construir a partir de este modelo todo un plano funcional.
 
 Web-grafía
+
 Los siguientes portales fueron muy útiles en la elaboración de este proyecto. Gracias a internet y sus colaboradores continuamos creciendo en la profesión
+
 https://www.iana.org/
+
 https://www.ecodeup.com/
+
 https://docs.github.com
+
 https://www.amitph.com
+
 https://reflectoring.io
+
 https://spring.io
+
 https://dzone.com
 
 Fin del documento
