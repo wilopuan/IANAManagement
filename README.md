@@ -65,7 +65,7 @@ Las pruebas de la API pueden hacerse desde un navegador normal (Con activación 
 
 1)	API: Prueba de aplicativo funcionando
 
-localhost:8080/rest/isalive
+http://localhost:8080/rest/isalive
 
 Esta prueba entrega una respuesta de Estado 200 cuando el aplicativo está listo para servir a las API.
 
@@ -74,7 +74,7 @@ Esta prueba requiere que exista un archivo plano en la ruta configurada en funct
 En esta ruta pueden existir varios archivos. Es necesario conocer el nombre de cual se va a procesar.
 El escenario funcional de esta operación es que el archivo llega a esta ruta, producto de un programador de tareas (Control-M), o el resultado de una descarga desde otro sistema. Puede llegar historificado (con Nombre aleatorio), el sistema consumidor de la API ya sabe con anterioridad que archivo procesar.
 
-localhost:8080/rest/processfile/iana_20210509.txt
+http://localhost:8080/rest/processfile/iana_20210509.txt
 
 Ante la inexistencia del archivo, entrega un estado 406, un JSON extendiendo la respuesta, registra en logger la petición inefectiva.
 Cuando el archivo existe, se envía a proceso asincrónico, esto es, en una tarea en background controlada por hilos, luego se libera la respuesta de la API. La API retorna una respuesta de estado 200, un JSON extendiendo la respuesta, aclarando que no hay resultados en esta API ya que el trabajo se procesa en Background, registra en looger los sucesos del proceso, para este caso, los registros que no se procesaron y su razón y el número de registros que fueron procesados.
