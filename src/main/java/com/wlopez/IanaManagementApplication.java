@@ -1,4 +1,4 @@
-package com.wlopez.ianamanagement;
+package com.wlopez;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
