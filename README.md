@@ -12,11 +12,16 @@ Se pretende construir la base para un sistema de administración de una lista de
 Herramientas de desarrollo
 
 Desarrollo en J2EE usando la versión jdk1.8.0_171.
+
 El ambiente de desarrollo usado IDE Eclipse Versión: Neon.3 Release (4.6.3).
+
 Se usa MAVEN como manejador de dependencias y arquetipo.
+
 Se usa como Framework Spring boot.
+
 Se usó como motor de base de datos para pruebas de desarrollo MySQL Workbench 8. 
-Se usa como manejador de versiones GIT
+
+Se usa como manejador de versiones GIT. (Incluir --branch master al momento de clonarlo).
 
 Insumos
 
@@ -59,18 +64,25 @@ Una vez desplegado el aplicativo, esto es desde IDE o desde el despliegue de su 
 Las pruebas de la API pueden hacerse desde un navegador normal (Con activación de herramientas de desarrollo), desde un SOAP-UI (Endpoint Explorer) o similar. A continuación se detallan los manuales de la API expuestas.
 
 1)	API: Prueba de aplicativo funcionando
+
 localhost:8080/rest/isalive
+
 Esta prueba entrega una respuesta de Estado 200 cuando el aplicativo está listo para servir a las API.
 
 2)	API: Carga de Archivo plano (Lanzamiento de procesamiento)
 Esta prueba requiere que exista un archivo plano en la ruta configurada en functional.properties. 
 En esta ruta pueden existir varios archivos. Es necesario conocer el nombre de cual se va a procesar.
 El escenario funcional de esta operación es que el archivo llega a esta ruta, producto de un programador de tareas (Control-M), o el resultado de una descarga desde otro sistema. Puede llegar historificado (con Nombre aleatorio), el sistema consumidor de la API ya sabe con anterioridad que archivo procesar.
+
 localhost:8080/rest/processfile/iana_20210509.txt
+
 Ante la inexistencia del archivo, entrega un estado 406, un JSON extendiendo la respuesta, registra en logger la petición inefectiva.
 Cuando el archivo existe, se envía a proceso asincrónico, esto es, en una tarea en background controlada por hilos, luego se libera la respuesta de la API. La API retorna una respuesta de estado 200, un JSON extendiendo la respuesta, aclarando que no hay resultados en esta API ya que el trabajo se procesa en Background, registra en looger los sucesos del proceso, para este caso, los registros que no se procesaron y su razón y el número de registros que fueron procesados.
 
 3)	API: Consulta de rangos donde se encuentra una IP
+
+http://localhost:8080/rest/queryfromip/250.055.1.14
+
 Esta API entrega información de rangos en los cuales se encuentra la IP. Tiene tres respuestas en un JSON con estado y extensión de respuesta. Las respuestas se detallan a continuación:
 La dirección IP esta fuera de un formato válido, 	estado 406. Significa que se dio un formato no válido para una IP, sea porque tiene mala anatomía (diferente de 4 segmentos), o porque tiene valores mayores a 255 en sus segmentos, o porque tiene malformaciones de caracteres o signos dentro de su composición.
 No hubo resultados para la consulta. Estado 412. Significa que la dirección enviada como parámetro no se encuentra dentro de los rangos inscritos en la base de datos.
@@ -79,16 +91,27 @@ Consulta satisfactoria, estado 200. Significa que hay resultados que se detallan
 Patrones y estrategias usadas para esta aplicación
 
 Para el desarrollo estandarizado de este proyecto se hizo uso de patrones y herramientas. Se mencionan los más destacados.
+
 ORM: A través de Hibernate/JPA proporcionados por el framework Spring, con el cual se independiza la capa de persistencia del motor de Base de datos relacional. Esto favorece la conmutación de la base de datos y la ejecución de patrones de consulta y gestión derivadas del JPA.
+
 Inyección de dependencias: Derivadas del framework Spring usado para la construcción del aplicativo, optimizando la creación de objetos de mayor uso.
+
 Multihilo:  Se usa la utilidad TaskExecutor proporcionada por Spring para ejecutar tareas en segundo plano. Esto permite el procesamiento asincrónico de la carga del archivo. El procesamiento asincrónico favorece la optimización del performace del aplicativo y su carga equilibrada dentro de la JVM.
+
 Loggin (org.slf4j.Logger): Uso de trazas de auditoría.  Se deja registrado en logger las operaciones inefectivas y las respuestas no esperadas del aplicativo.
+
 Properties: Se proporciona la forma de configurar el aplicativo para personalizar variables, como por ejemplo la ruta desde donde se toman los archivos a procesar.
+
 Tokenización: Usado para el –Parseo- de cadenas y validación. Favorece el intercambio de datos entre sistemas.
+
 DTO: Diseño de modelos de datos de trasferencia, para entrega de resultados. Es una estandarización de los formatos de información entregados por la API.
+
 TDD: Se implementan test automáticos de pruebas unitarias con la utilidad SpringBootTest, para favorecer procesos de construcción e integración continua del aplicativo.  
 
+RESTfull services: Usados para la exposición de la capa funcional.
+
 Conclusiones
+
 El desarrollo de este aplicativo, deja como experiencia el aprovechamiento de un ecosistema compuesto por un tecnology stack, que favorece la construcción inicial y futuras modificaciones del aplicativo dentro de técnicas de desarrollo ágil.
 Los tiempos invertidos inicialmente mientras se instala el ecosistema pueden ser altos, pero compensa con el bajo tiempo en el desarrollo de las modificaciones al aplicativo.
 Es importante destacar que, si bien este ejercicio no representa todas las funcionalidades que debe tener un escenario de administración real de un control IANA, es la base para construir a partir de este modelo todo un plano funcional.
