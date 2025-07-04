@@ -105,9 +105,9 @@ public class AppUtilities {
 	/**
 	 * Retorna los n caracteres de la variable en parametro
 	 *
-	 * @param String
+	 * param String
 	 *            Cadena a truncar
-	 * @param int
+	 * param int
 	 *            posiciones a truncar
 	 * @return String cadena truncada
 	 */
